@@ -1,0 +1,17 @@
+import numpy as np
+
+# Datos del experimento
+voltaje = np.array([2, 4, 6, 8, 10, 12, 14, 16, 18, 20])  # Voltios
+corriente_mA = np.array([6.06, 12.1, 18.2, 24.2, 30.3, 36.4, 42.4, 48.5, 54.5, 60.6])  # miliamperios
+
+corriente = corriente_mA / 1000
+
+resistencia = voltaje / corriente
+
+promedio = np.mean(resistencia)
+desviacion = np.std(resistencia, ddof=1)  
+
+print("Resistencias calculadas (Ω):")
+print(resistencia.round(2))
+print(f"\nResistencia promedio: {promedio:.2f} Ω")
+print(f"Desviación estándar: {desviacion:.4f} Ω")
