@@ -1,17 +1,34 @@
 import numpy as np
+# Se importa la librería NumPy, usada para manejar arreglos y realizar cálculos numéricos.
 
 # Datos del experimento
 voltaje = np.array([2, 4, 6, 8, 10, 12, 14, 16, 18, 20])  # Voltios
+# Arreglo con los valores de voltaje aplicados durante el experimento.
+
 corriente_mA = np.array([6.06, 12.1, 18.2, 24.2, 30.3, 36.4, 42.4, 48.5, 54.5, 60.6])  # miliamperios
+# Arreglo con los valores de corriente medidos, expresados en miliamperios.
 
 corriente = corriente_mA / 1000
+# Conversión de la corriente de miliamperios a amperios, ya que la Ley de Ohm usa amperios.
 
 resistencia = voltaje / corriente
+# Cálculo de la resistencia para cada par de datos usando la fórmula R = V / I.
 
 promedio = np.mean(resistencia)
-desviacion = np.std(resistencia, ddof=1)  
+# Cálculo del valor promedio de la resistencia obtenida.
+
+desviacion = np.std(resistencia, ddof=1)
+# Cálculo de la desviación estándar para analizar la variación de los valores.
+# El parámetro ddof=1 se usa para obtener la desviación estándar muestral.
 
 print("Resistencias calculadas (Ω):")
+# Imprime un encabezado para los valores de resistencia.
+
 print(resistencia.round(2))
+# Imprime los valores de resistencia redondeados a dos decimales.
+
 print(f"\nResistencia promedio: {promedio:.2f} Ω")
+# Imprime el valor promedio de la resistencia, con dos decimales.
+
 print(f"Desviación estándar: {desviacion:.4f} Ω")
+# Imprime la desviación estándar con cuatro decimales para mayor precisión.
