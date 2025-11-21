@@ -2,52 +2,68 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.stats import linregress
 
-# --- Datos del experimento (extraídos de la primera imagen) ---
+# --------------------------------------------------------------
+#   Datos del experimento
+# --------------------------------------------------------------
 
-# Voltaje en Voltios (V) - Eje Y
-V = np.array([2, 4, 6, 8, 10, 12, 14, 16, 18, 20]) 
+# Voltajes medidos (en Voltios)
+V = np.array([2, 4, 6, 8, 10, 12, 14, 16, 18, 20])
 
-# Corriente en miliAmperios (mA) - Eje X
-# Asegúrate de usar punto decimal en lugar de coma para Python
+# Corrientes medidas (en miliamperios)
 I_mA = np.array([6.06, 12.1, 18.2, 24.2, 30.3, 36.4, 42.4, 48.5, 54.5, 60.6])
 
-# --- Regresión Lineal (V vs I) ---
-# La función linregress calcula la regresión lineal de forma y = m*x + b
-# En este caso: V = pendiente * I_mA + intercepto
+# --------------------------------------------------------------
+#   Regresión lineal (V en función de I)
+#   Se usa: V = pendiente * I + intercepto
+# --------------------------------------------------------------
+
+# linregress devuelve: pendiente, intercepto, r, p-value y error estándar
 slope, intercept, r_value, p_value, std_err = linregress(I_mA, V)
 
-# Coeficiente de Determinación (R²)
+# Cálculo del coeficiente de determinación (R²)
 r_squared = r_value**2
 
-# Generar la línea de regresión para el gráfico
+# Se generan puntos para dibujar la línea de regresión
 I_fit = np.linspace(min(I_mA), max(I_mA), 100)
 V_fit = slope * I_fit + intercept
 
-# --- Gráfico de Dispersión y Línea de Regresión ---
+# --------------------------------------------------------------
+#   Gráfica: datos experimentales + línea de regresión
+# --------------------------------------------------------------
+
 plt.figure(figsize=(10, 6))
+
+# Puntos experimentales
 plt.scatter(I_mA, V, color='blue', label='Datos Experimentales')
-plt.plot(I_fit, V_fit, color='red', label=f'Línea de Regresión Lineal\n$V = {slope:.3f} \cdot I_{{mA}} + {intercept:.3f}$')
 
-# Añadir etiquetas y título
-plt.title(f'Voltaje (V) vs Corriente ($I_{{mA}}$) con Regresión Lineal')
-plt.xlabel('Corriente, $I_{mA}$ (mA)')
-plt.ylabel('Voltaje, V (V)')
+# Línea de regresión
+plt.plot(I_fit, V_fit, color='red',
+         label=f'Línea de Regresión\n$V = {slope:.3f} \\, I_{{mA}} + {intercept:.3f}$')
 
-# Añadir la información de la regresión en el gráfico
-plt.text(0.05, 0.95, 
-         f'Pendiente (m): {slope:.3f} V/mA\n'
-         f'Punto de Corte (b): {intercept:.3f} V\n'
+# Etiquetas de ejes y título
+plt.title('Voltaje (V) vs Corriente (mA) con Regresión Lineal')
+plt.xlabel('Corriente $I_{mA}$ (mA)')
+plt.ylabel('Voltaje V (V)')
+
+# Cuadro con resultados dentro de la gráfica
+plt.text(0.05, 0.95,
+         f'Pendiente: {slope:.3f} V/mA\n'
+         f'Intercepto: {intercept:.3f} V\n'
          f'$R^2$: {r_squared:.4f}',
-         transform=plt.gca().transAxes, 
-         verticalalignment='top', 
-         bbox=dict(boxstyle="round,pad=0.5", fc="white", alpha=0.6))
+         transform=plt.gca().transAxes,
+         verticalalignment='top',
+         bbox=dict(boxstyle="round,pad=0.5", fc="white", alpha=0.7))
 
 plt.grid(True)
 plt.legend()
 plt.show()
 
-print(f"--- Resultados de la Regresión Lineal ---")
+# --------------------------------------------------------------
+#   Impresión de resultados en consola
+# --------------------------------------------------------------
+
+print("--- Resultados de la Regresión Lineal ---")
 print(f"Pendiente (m): {slope:.3f} V/mA")
-print(f"Punto de Corte (b): {intercept:.3f} V")
+print(f"Intercepto (b): {intercept:.3f} V")
 print(f"Coeficiente de Correlación (r): {r_value:.4f}")
 print(f"Coeficiente de Determinación (R²): {r_squared:.4f}")
